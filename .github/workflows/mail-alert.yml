@@ -15,14 +15,17 @@ jobs:
       - name: Send Email
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.EMAIL_HOST }}
-          server_port: ${{ secrets.EMAIL_PORT }}
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "GitHub Push Alert"
           to: ${{ secrets.EMAIL_TO }}
-          from: GitHub Alert
+          from: ${{ secrets.EMAIL_USERNAME }}
           body: |
+            Code pushed to repository
+
             Repository: ${{ github.repository }}
             User: ${{ github.actor }}
             Branch: ${{ github.ref }}
