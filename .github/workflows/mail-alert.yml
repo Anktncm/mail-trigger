@@ -1,0 +1,36 @@
+name: Daily Push Report
+
+on:
+  schedule:
+    - cron: "0 17 * * *"   # runs daily
+  push:
+    branches:
+      - main
+
+jobs:
+  send-mail:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Send Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.EMAIL_HOST }}
+          server_port: ${{ secrets.EMAIL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "GitHub Repo Push Alert"
+          to: ${{ secrets.EMAIL_TO }}
+          from: GitHub Alert
+          body: |
+            Code has been pushed to the repository.
+
+            Repo: ${{ github.repository }}
+            User: ${{ github.actor }}
+            Branch: ${{ github.ref }}
+            Commit: ${{ github.sha }}
+
+            Check repository for details.
