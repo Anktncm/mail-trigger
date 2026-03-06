@@ -2,7 +2,7 @@ name: Repo Push Mail Alert
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # runs every 5 minutes
+    - cron: "0 0 * * 0"  
   push:
     branches:
       - main
